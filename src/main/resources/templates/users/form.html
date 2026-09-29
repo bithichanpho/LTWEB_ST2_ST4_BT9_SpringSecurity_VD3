@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Nguoi dung')}"></head>
+<body>
+
+	<div th:replace="~{layouts/layout :: page(~{::main})}">
+
+		<main>
+
+			<div class="card border-light shadow-sm p-4">
+				<h5 class="card-title mb-4">Thong tin nguoi dung</h5>
+
+				<form
+					th:with="actionUrl=${mode == 'create' ? '/users/create' : '/users/edit/' + userDTO.id}"
+					th:action="@{${actionUrl}}" th:object="${userDTO}" method="post"
+					accept-charset="UTF-8">
+
+					<div th:if="${#fields.hasGlobalErrors()}"
+						class="alert-custom alert-custom-danger mb-3">
+						<i class="bi bi-exclamation-triangle-fill alert-custom-icon"></i>
+						<div class="alert-custom-content">
+							<p th:each="e : ${#fields.globalErrors()}" th:text="${e}"
+								class="mb-0"></p>
+						</div>
+					</div>
+
+					<div class="row g-3">
+						<div class="col-md-6">
+							<label class="form-label-custom">Username</label> <input
+								class="form-control-custom" th:field="*{username}"
+								placeholder="vd: trungnh">
+							<div class="error-text small" th:errors="*{username}"></div>
+						</div>
+
+						<div class="col-md-6">
+							<label class="form-label-custom">Email</label> <input
+								type="email" class="form-control-custom" th:field="*{email}"
+								placeholder="vd: a@example.com">
+							<div class="error-text small" th:errors="*{email}"></div>
+						</div>
+
+						<div class="col-md-6">
+							<label class="form-label-custom">Ho ten</label> <input
+								class="form-control-custom" th:field="*{fullName}"
+								placeholder="Vd: Nguyen Van A">
+							<div class="error-text small" th:errors="*{fullName}"></div>
+						</div>
+
+						<div class="col-md-6">
+							<label class="form-label-custom">Vai tro</label> <select
+								class="form-select-custom" th:field="*{roleName}">
+								<option value="ROLE_USER">USER</option>
+								<option value="ROLE_ADMIN">ADMIN</option>
+							</select>
+						</div>
+
+						<div class="col-md-6 d-flex align-items-center">
+							<label class="form-label-custom me-2 mb-0">Kich hoat tai
+								khoan</label>
+							<div class="form-check form-switch">
+								<input class="form-check-input" type="checkbox"
+									th:field="*{enabled}">
+							</div>
+						</div>
+					</div>
+
+					<div class="d-flex gap-2 mt-4">
+						<button type="submit" class="btn-custom btn-custom-primary">
+							<i class="bi bi-check-lg"></i> Luu nguoi dung
+						</button>
+						<a th:href="@{/users}"
+							class="btn-custom btn-custom-outline-primary">Huy</a>
+					</div>
+
+					<p class="mt-3" th:if="${mode == 'create'}"
+						style="padding: 12px; background: #fff7ed; border-radius: 7px;">
+						Mat khau mac dinh cua user do Admin tao: <b>123456</b>.
+					</p>
+				</form>
+			</div>
+
+		</main>
+
+	</div>
+
+</body>
+</html>

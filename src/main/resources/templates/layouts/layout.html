@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head(title)">
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title th:text="|${title} - SHOP|">SHOP</title>
+	<link rel="icon" type="image/png" th:href="@{/assets/images/favicon.ico}">
+	<link rel="stylesheet" th:href="@{/assets/libs/bootstrap/css/bootstrap.min.css}">
+	<link rel="stylesheet" th:href="@{/assets/libs/bootstrap-icons/bootstrap-icons.css}">
+	<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+</head>
+<body>
+
+<div th:fragment="page(content)">
+	<div class="main-wrapper" style="margin-left: 0;">
+
+		<header th:replace="~{fragments/header :: header}"></header>
+
+		<!-- Thong bao (flash message) -->
+		<div th:if="${success}" class="alert-custom alert-custom-success mx-4 mt-3">
+			<i class="bi bi-check-circle-fill alert-custom-icon"></i>
+			<div class="alert-custom-content" th:text="${success}">Thanh cong</div>
+		</div>
+		<div th:if="${message}" class="alert-custom alert-custom-success mx-4 mt-3">
+			<i class="bi bi-check-circle-fill alert-custom-icon"></i>
+			<div class="alert-custom-content" th:text="${message}">Thanh cong</div>
+		</div>
+		<div th:if="${flashError}" class="alert-custom alert-custom-danger mx-4 mt-3">
+			<i class="bi bi-exclamation-triangle-fill alert-custom-icon"></i>
+			<div class="alert-custom-content" th:text="${flashError}">Loi</div>
+		</div>
+
+		<div class="page-header">
+			<div>
+				<h1 class="page-title" th:text="${pageTitle != null ? pageTitle : 'SHOP'}">SHOP</h1>
+				<p class="page-subtitle" th:if="${pageSubtitle}" th:text="${pageSubtitle}"></p>
+			</div>
+			<nav aria-label="breadcrumb">
+				<ol class="breadcrumb mb-0">
+					<li class="breadcrumb-item"><a th:href="@{/home}"
+						class="text-decoration-none text-muted-green">Home</a></li>
+					<li class="breadcrumb-item active text-main" aria-current="page"
+						th:text="${pageTitle != null ? pageTitle : 'SHOP'}">Trang</li>
+				</ol>
+			</nav>
+		</div>
+
+		<div class="page-content" style="flex: 1;">
+			<th:block th:replace="${content}"></th:block>
+		</div>
+
+		<footer th:replace="~{fragments/footer :: footer}"></footer>
+
+	</div>
+</div>
+
+</body>
+</html>

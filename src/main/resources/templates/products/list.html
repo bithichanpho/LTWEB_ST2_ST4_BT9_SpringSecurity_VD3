@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Quan ly san pham')}"></head>
+<body>
+
+	<div th:replace="~{layouts/layout :: page(~{::main})}">
+
+		<main>
+
+			<div class="table-card-custom">
+				<div class="table-header-control">
+					<form th:action="@{/products}" method="get" class="table-search-box">
+						<i class="bi bi-search table-search-icon"></i> <input type="text"
+							name="keyword" class="table-search-input"
+							placeholder="Tim theo ten san pham, mo ta..." th:value="${keyword}">
+						<input type="hidden" name="size" th:value="${size}">
+					</form>
+					<div class="table-filter-group">
+						<a th:href="@{/products/create}"
+							class="btn-custom btn-custom-primary btn-custom-sm"> <i
+							class="bi bi-plus-lg"></i> Them san pham
+						</a>
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table-custom">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Anh</th>
+								<th>Ten san pham</th>
+								<th>Gia</th>
+								<th>Nguoi tao</th>
+								<th class="text-center">Hanh dong</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="p : ${products.content}">
+								<td class="table-order-id" th:text="${p.id}">SP01</td>
+								<td><img
+									th:src="${p.displayImageUrl} ?: '/assets/images/favicon.ico'"
+									th:alt="${p.name}"
+									style="width: 44px; height: 44px; object-fit: cover; border-radius: 8px;"></td>
+								<td class="table-product-name" th:text="${p.name}">San
+									pham</td>
+								<td class="table-amount"><span
+									th:text="${#numbers.formatDecimal(p.price, 1, 'COMMA', 0, 'POINT')}">0</span>
+									d</td>
+								<td th:text="${p.username}">user</td>
+								<td>
+									<div class="d-flex justify-content-center gap-1">
+										<a
+											th:if="${isAdmin or (currentUserId != null and p.userId == currentUserId)}"
+											th:href="@{/products/edit/{id}(id=${p.id})}"
+											class="table-btn-action" title="Sua"><i
+											class="bi bi-pencil"></i></a>
+										<form
+											th:if="${isAdmin or (currentUserId != null and p.userId == currentUserId)}"
+											th:action="@{/products/delete/{id}(id=${p.id})}"
+											method="post" class="m-0"
+											onsubmit="return confirm('Xoa san pham nay?');">
+											<button type="submit" class="table-btn-action delete"
+												title="Xoa">
+												<i class="bi bi-trash"></i>
+											</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+							<tr th:if="${products.empty}">
+								<td colspan="6" class="text-center text-muted-green py-4">Chua
+									co san pham nao.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Phan trang -->
+				<nav class="d-flex justify-content-between align-items-center mt-3"
+					th:if="${products.totalPages > 1}">
+					<span class="text-muted-green small"> Trang <span
+						th:text="${products.number + 1}">1</span> / <span
+						th:text="${products.totalPages}">1</span> (tong <span
+						th:text="${products.totalElements}">0</span> ban ghi)
+					</span>
+					<ul class="pagination pagination-sm mb-0">
+						<li class="page-item"
+							th:classappend="${products.first} ? 'disabled'"><a
+							class="page-link"
+							th:href="@{/products(keyword=${keyword}, page=${products.number - 1}, size=${size})}">&laquo;</a>
+						</li>
+						<li class="page-item"
+							th:each="i : ${#numbers.sequence(0, products.totalPages - 1)}"
+							th:classappend="${i == products.number} ? 'active'"><a
+							class="page-link"
+							th:href="@{/products(keyword=${keyword}, page=${i}, size=${size})}"
+							th:text="${i + 1}">1</a></li>
+						<li class="page-item"
+							th:classappend="${products.last} ? 'disabled'"><a
+							class="page-link"
+							th:href="@{/products(keyword=${keyword}, page=${products.number + 1}, size=${size})}">&raquo;</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+
+		</main>
+
+	</div>
+
+</body>
+</html>

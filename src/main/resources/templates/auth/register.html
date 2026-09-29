@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dang ky - SHOP</title>
+<link rel="icon" type="image/png" th:href="@{/assets/images/favicon.ico}">
+<link rel="stylesheet" th:href="@{/assets/libs/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/libs/bootstrap-icons/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+</head>
+
+<body>
+	<div class="login-wrapper">
+		<div class="login-bg-shape login-bg-shape-1"></div>
+		<div class="login-bg-shape login-bg-shape-2"></div>
+
+		<div class="login-card">
+			<a th:href="@{/home}" class="login-brand text-decoration-none"> <i
+				class="bi bi-bag-heart-fill"></i> <span>SHOP</span>
+			</a>
+
+			<p class="login-subtitle">Tao tai khoan moi (xac nhan bang OTP
+				qua email)</p>
+
+			<form th:action="@{/register}" th:object="${registerDTO}" method="post"
+				id="registerForm" accept-charset="UTF-8">
+
+				<div th:if="${#fields.hasGlobalErrors()}"
+					class="alert-custom alert-custom-danger mb-3">
+					<i class="bi bi-exclamation-triangle-fill alert-custom-icon"></i>
+					<div class="alert-custom-content">
+						<p th:each="e : ${#fields.globalErrors()}" th:text="${e}"
+							class="mb-0"></p>
+					</div>
+				</div>
+
+				<div class="login-form-group">
+					<label for="username" class="login-form-label">Username</label>
+					<div class="login-input-group">
+						<i class="bi bi-person-badge input-icon"></i> <input type="text"
+							id="username" th:field="*{username}" class="login-input"
+							placeholder="vd: trungnh">
+					</div>
+					<small class="error-text" th:errors="*{username}"></small>
+				</div>
+
+				<div class="login-form-group">
+					<label for="email" class="login-form-label">Email</label>
+					<div class="login-input-group">
+						<i class="bi bi-envelope input-icon"></i> <input type="email"
+							id="email" th:field="*{email}" class="login-input"
+							placeholder="name@company.com">
+					</div>
+					<small class="error-text" th:errors="*{email}"></small>
+				</div>
+
+				<div class="login-form-group">
+					<label for="fullName" class="login-form-label">Ho ten</label>
+					<div class="login-input-group">
+						<i class="bi bi-person input-icon"></i> <input type="text"
+							id="fullName" th:field="*{fullName}" class="login-input"
+							placeholder="Nguyen Van A">
+					</div>
+					<small class="error-text" th:errors="*{fullName}"></small>
+				</div>
+
+				<div class="login-form-group">
+					<label for="password" class="login-form-label">Mat khau</label>
+					<div class="login-input-group">
+						<i class="bi bi-shield-lock input-icon"></i> <input
+							type="password" id="password" th:field="*{password}"
+							class="login-input login-input-password"
+							placeholder="Toi thieu 6 ky tu">
+					</div>
+					<small class="error-text" th:errors="*{password}"></small>
+				</div>
+
+				<div class="login-form-group">
+					<label for="confirmPassword" class="login-form-label">Nhap
+						lai mat khau</label>
+					<div class="login-input-group">
+						<i class="bi bi-shield-lock input-icon"></i> <input
+							type="password" id="confirmPassword"
+							th:field="*{confirmPassword}"
+							class="login-input login-input-password">
+					</div>
+					<small class="error-text" th:errors="*{confirmPassword}"></small>
+				</div>
+
+				<button type="submit" class="btn-login">
+					<span>Dang ky &amp; nhan OTP</span> <i class="bi bi-arrow-right"></i>
+				</button>
+			</form>
+
+			<p class="login-footer-text">
+				Da co tai khoan? <a th:href="@{/login}">Dang nhap</a>
+			</p>
+		</div>
+	</div>
+
+	<script th:src="@{/assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

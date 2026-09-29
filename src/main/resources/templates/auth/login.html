@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Dang nhap - SHOP</title>
+<link rel="icon" type="image/png" th:href="@{/assets/images/favicon.ico}">
+<link rel="stylesheet" th:href="@{/assets/libs/bootstrap/css/bootstrap.min.css}">
+<link rel="stylesheet" th:href="@{/assets/libs/bootstrap-icons/bootstrap-icons.css}">
+<link rel="stylesheet" th:href="@{/assets/css/main.css}">
+</head>
+
+<body>
+	<div class="login-wrapper">
+		<div class="login-bg-shape login-bg-shape-1"></div>
+		<div class="login-bg-shape login-bg-shape-2"></div>
+
+		<div class="login-card">
+			<a th:href="@{/home}" class="login-brand text-decoration-none"> <i
+				class="bi bi-bag-heart-fill"></i> <span>SHOP</span>
+			</a>
+
+			<p class="login-subtitle">Dang nhap de tiep tuc mua sam</p>
+
+			<div th:if="${success}" class="alert-custom alert-custom-success mb-3">
+				<i class="bi bi-check-circle-fill alert-custom-icon"></i>
+				<div class="alert-custom-content" th:text="${success}">Thanh cong</div>
+			</div>
+			<div th:if="${param.error}" class="alert-custom alert-custom-danger mb-3">
+				<i class="bi bi-exclamation-triangle-fill alert-custom-icon"></i>
+				<div class="alert-custom-content">Username/email hoac mat khau
+					khong dung, hoac tai khoan chua duoc xac thuc OTP.</div>
+			</div>
+			<div th:if="${param.logout}" class="alert-custom alert-custom-success mb-3">
+				<i class="bi bi-check-circle-fill alert-custom-icon"></i>
+				<div class="alert-custom-content">Ban da dang xuat.</div>
+			</div>
+
+			<form th:action="@{/login}" method="post" id="loginForm" accept-charset="UTF-8">
+				<div class="login-form-group">
+					<label for="username" class="login-form-label">Username hoac
+						Email</label>
+					<div class="login-input-group">
+						<i class="bi bi-person input-icon"></i> <input type="text"
+							id="username" name="username" class="login-input"
+							placeholder="username hoac name@company.com" required autofocus>
+					</div>
+				</div>
+
+				<div class="login-form-group">
+					<label for="password" class="login-form-label">Mat khau</label>
+					<div class="login-input-group">
+						<i class="bi bi-shield-lock input-icon"></i> <input
+							type="password" id="password" name="password"
+							class="login-input login-input-password" placeholder="********"
+							required>
+					</div>
+				</div>
+
+				<button type="submit" class="btn-login" id="btn-submit">
+					<span>Dang nhap</span> <i class="bi bi-arrow-right"></i>
+				</button>
+			</form>
+
+			<p class="login-footer-text">
+				Chua co tai khoan? <a th:href="@{/register}">Dang ky ngay</a>
+			</p>
+			<p class="login-footer-text">
+				<a th:href="@{/forgot-password}">Quen mat khau?</a>
+			</p>
+			<p class="login-footer-text">
+				<a th:href="@{/home}"><i class="bi bi-arrow-left"></i> Ve
+					trang chu</a>
+			</p>
+		</div>
+	</div>
+
+	<script th:src="@{/assets/libs/bootstrap/js/bootstrap.bundle.min.js}"></script>
+</body>
+
+</html>

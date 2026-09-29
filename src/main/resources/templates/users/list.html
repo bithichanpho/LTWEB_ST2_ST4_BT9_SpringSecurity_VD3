@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Quan ly nguoi dung')}"></head>
+<body>
+
+	<div th:replace="~{layouts/layout :: page(~{::main})}">
+
+		<main>
+
+			<div class="table-card-custom">
+				<div class="table-header-control">
+					<form th:action="@{/users}" method="get" class="table-search-box">
+						<i class="bi bi-search table-search-icon"></i> <input type="text"
+							name="keyword" class="table-search-input"
+							placeholder="Username, email, ho ten..." th:value="${keyword}">
+						<input type="hidden" name="size" th:value="${size}">
+					</form>
+					<div class="table-filter-group">
+						<a th:href="@{/users/create}"
+							class="btn-custom btn-custom-primary btn-custom-sm"> <i
+							class="bi bi-plus-lg"></i> Them nguoi dung
+						</a>
+					</div>
+				</div>
+
+				<div class="table-responsive">
+					<table class="table-custom">
+						<thead>
+							<tr>
+								<th>ID</th>
+								<th>Username</th>
+								<th>Email</th>
+								<th>Ho ten</th>
+								<th>Vai tro</th>
+								<th>Trang thai</th>
+								<th>San pham</th>
+								<th class="text-center">Hanh dong</th>
+							</tr>
+						</thead>
+						<tbody>
+							<tr th:each="u : ${users.content}">
+								<td class="table-order-id" th:text="${u.id}">1</td>
+								<td class="table-product-name" th:text="${u.username}">user</td>
+								<td th:text="${u.email}">email</td>
+								<td th:text="${u.fullName}">Ho ten</td>
+								<td><span class="badge-table success"
+									th:if="${u.roleName == 'ROLE_ADMIN'}">Admin</span> <span
+									class="badge-table pending"
+									th:unless="${u.roleName == 'ROLE_ADMIN'}">User</span></td>
+								<td><span class="badge-table success" th:if="${u.enabled}">Kich
+										hoat</span> <span class="badge-table failed" th:unless="${u.enabled}">Chua
+										kich hoat</span></td>
+								<td th:text="${u.productCount}">0</td>
+								<td>
+									<div class="d-flex justify-content-center gap-1">
+										<a th:href="@{/users/edit/{id}(id=${u.id})}"
+											class="table-btn-action" title="Sua"><i
+											class="bi bi-pencil"></i></a>
+										<form th:action="@{/users/delete/{id}(id=${u.id})}"
+											method="post" class="m-0"
+											onsubmit="return confirm('Xoa nguoi dung nay?');">
+											<button type="submit" class="table-btn-action delete"
+												title="Xoa">
+												<i class="bi bi-trash"></i>
+											</button>
+										</form>
+									</div>
+								</td>
+							</tr>
+							<tr th:if="${users.empty}">
+								<td colspan="8" class="text-center text-muted-green py-3">Khong
+									tim thay nguoi dung nao.</td>
+							</tr>
+						</tbody>
+					</table>
+				</div>
+
+				<!-- Phan trang -->
+				<nav class="d-flex justify-content-between align-items-center mt-3"
+					th:if="${users.totalPages > 1}">
+					<span class="text-muted-green small"> Trang <span
+						th:text="${users.number + 1}">1</span> / <span
+						th:text="${users.totalPages}">1</span> (tong <span
+						th:text="${users.totalElements}">0</span> ban ghi)
+					</span>
+					<ul class="pagination pagination-sm mb-0">
+						<li class="page-item" th:classappend="${users.first} ? 'disabled'">
+							<a class="page-link"
+							th:href="@{/users(keyword=${keyword}, page=${users.number - 1}, size=${size})}">&laquo;</a>
+						</li>
+						<li class="page-item"
+							th:each="i : ${#numbers.sequence(0, users.totalPages - 1)}"
+							th:classappend="${i == users.number} ? 'active'"><a
+							class="page-link"
+							th:href="@{/users(keyword=${keyword}, page=${i}, size=${size})}"
+							th:text="${i + 1}">1</a></li>
+						<li class="page-item" th:classappend="${users.last} ? 'disabled'">
+							<a class="page-link"
+							th:href="@{/users(keyword=${keyword}, page=${users.number + 1}, size=${size})}">&raquo;</a>
+						</li>
+					</ul>
+				</nav>
+			</div>
+
+		</main>
+
+	</div>
+
+</body>
+</html>

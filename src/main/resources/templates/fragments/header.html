@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+
+	<header class="navbar-custom" th:fragment="header"
+		style="display: flex; align-items: center; justify-content: space-between; flex-wrap: nowrap; gap: 1rem; width: auto; align-self: stretch;">
+
+		<div class="navbar-left"
+			style="display: flex; align-items: center; flex-wrap: nowrap; flex: 1 1 auto; min-width: 0;">
+			<a th:href="@{/home}" class="sidebar-brand"
+				style="margin-bottom: 0; padding-left: 0; color: var(--brand-forest-dark); font-size: 1.25rem; white-space: nowrap; flex-shrink: 0;">
+				<i class="bi bi-bag-heart-fill"></i> <span>SHOP</span>
+			</a>
+			<nav class="d-flex align-items-center flex-nowrap gap-4 ms-4"
+				style="white-space: nowrap; flex-shrink: 0;">
+				<a th:href="@{/home}"
+					style="color: var(--brand-forest-dark); text-decoration: none; font-weight: 600; white-space: nowrap; flex-shrink: 0;">Trang
+					chu</a> <a th:href="@{/products}"
+					style="color: var(--brand-forest-dark); text-decoration: none; font-weight: 600; white-space: nowrap; flex-shrink: 0;">San
+					pham</a> <a sec:authorize="hasRole('ADMIN')" th:href="@{/users}"
+					style="color: var(--brand-forest-dark); text-decoration: none; font-weight: 600; white-space: nowrap; flex-shrink: 0;">Nguoi
+					dung</a>
+			</nav>
+		</div>
+
+		<div class="navbar-actions"
+			style="margin-left: auto; white-space: nowrap; flex-shrink: 0;">
+			<div class="d-flex align-items-center flex-nowrap gap-2"
+				sec:authorize="isAuthenticated()">
+				<span class="navbar-profile-name"
+					th:text="${#authentication.principal.fullName}"
+					style="font-weight: 600; white-space: nowrap;">user</span> <span
+					class="badge-table success" sec:authorize="hasRole('ADMIN')"
+					style="white-space: nowrap;">admin</span>
+				<form th:action="@{/logout}" method="post" class="m-0">
+					<button type="submit"
+						class="btn-custom btn-custom-outline-primary btn-custom-sm"
+						style="white-space: nowrap;">Dang xuat</button>
+				</form>
+			</div>
+
+			<div class="d-flex align-items-center flex-nowrap"
+				sec:authorize="!isAuthenticated()">
+				<a th:href="@{/login}"
+					class="btn-custom btn-custom-outline-primary btn-custom-sm"
+					style="margin-right: .5rem; white-space: nowrap;">Dang nhap</a> <a
+					th:href="@{/register}"
+					class="btn-custom btn-custom-primary btn-custom-sm"
+					style="white-space: nowrap;">Dang ky</a>
+			</div>
+		</div>
+
+	</header>
+
+</body>
+</html>

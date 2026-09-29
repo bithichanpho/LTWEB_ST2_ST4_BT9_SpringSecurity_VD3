@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head th:replace="~{layouts/layout :: head('Dashboard')}"></head>
+<body>
+
+	<div th:replace="~{layouts/layout :: page(~{::main})}">
+
+		<main>
+
+			<!-- Thong ke: dem so user / so san pham (yeu cau de bai) -->
+			<div class="row g-4">
+				<div class="col-md-6">
+					<div class="card card-stat">
+						<div class="card-header">
+							<span class="stat-label">Tong nguoi dung</span>
+						</div>
+						<div class="stat-value" th:text="${userCount}">0</div>
+					</div>
+				</div>
+				<div class="col-md-6">
+					<div class="card card-stat">
+						<div class="card-header">
+							<span class="stat-label">Tong san pham</span>
+						</div>
+						<div class="stat-value" th:text="${productCount}">0</div>
+					</div>
+				</div>
+			</div>
+
+			<div class="d-flex gap-2 mt-4">
+				<a th:href="@{/products}" class="btn-custom btn-custom-primary">
+					<i class="bi bi-box-seam"></i> Quan ly Products
+				</a>
+				<a sec:authorize="hasRole('ADMIN')" th:href="@{/users}"
+					class="btn-custom btn-custom-outline-primary"> <i
+					class="bi bi-people"></i> Quan ly Users
+				</a>
+			</div>
+
+		</main>
+
+	</div>
+
+</body>
+</html>
